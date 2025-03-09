@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<HTA:APPLICATION ID="CS"
+APPLICATIONNAME="Warhead"
+WINDOWSTATE="minimize"
+MAXIMIZEBUTTON="no"
+MINIMIZEBUTTON="no"
+CAPTION="no"
+SHOWINTASKBAR="no">
+
+<script>
+# Code here
+
+
+</script>
+</head>
+<body>
+</body>
+</html>

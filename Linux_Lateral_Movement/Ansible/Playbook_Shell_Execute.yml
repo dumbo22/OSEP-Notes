@@ -1,0 +1,10 @@
+- name: Run Shell
+  hosts: all
+  gather_facts: true
+  become: yes
+  become_user: root
+  tasks:
+    - name: Run command
+      shell: "touch /tmp/result.txt && whoami > /tmp/result.txt"
+      async: 10
+      poll: 0

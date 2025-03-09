@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<HTA:APPLICATION ID="CS"
+APPLICATIONNAME="Warhead"
+WINDOWSTATE="minimize"
+MAXIMIZEBUTTON="no"
+MINIMIZEBUTTON="no"
+CAPTION="no"
+SHOWINTASKBAR="no">
+
+
+<script type="text/vbscript" LANGUAGE="VBScript" >
+
+# Code here
+
+</script>
+</head>
+<body>
+</body>
+</html>

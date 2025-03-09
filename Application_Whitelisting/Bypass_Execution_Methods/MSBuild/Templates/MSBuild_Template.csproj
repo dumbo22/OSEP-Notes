@@ -1,0 +1,34 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Target Name="ExecuteWarhead">
+<WarheadRunner />
+</Target>
+
+<UsingTask TaskName="WarheadRunner" TaskFactory="CodeTaskFactory"
+AssemblyFile="C:\Windows\Microsoft.Net\Framework\v4.0.30319\Microsoft.Build.Tasks.v4.0.dll">
+<Task>
+<Code Type="Class" Language="cs">
+<![CDATA[
+using System;
+using Microsoft.Build.Utilities;
+// Additional using statements (e.g., System.Runtime.InteropServices, etc.) can be added here
+
+public class WarheadRunner : Task
+{
+    // Imports and other static declarations go here
+
+    public override bool Execute()
+    {
+        // Execution logic goes here
+        // Example: IntPtr heapHandle = HeapCreate(...);
+                
+        // Ensure execution is successful
+        return true;
+    }
+
+    // Additional methods or logic, if required, can go here
+}
+]]>
+</Code>
+</Task>
+</UsingTask>
+</Project>

